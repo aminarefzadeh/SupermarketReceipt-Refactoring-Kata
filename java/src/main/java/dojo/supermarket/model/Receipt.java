@@ -2,6 +2,7 @@ package dojo.supermarket.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Receipt {
     private List<ReceiptItem> items = new ArrayList<>();
@@ -32,5 +33,17 @@ public class Receipt {
 
     public List<Discount> getDiscounts() {
         return discounts;
+    }
+
+    void handleOffers(List<ProductQuantity> productQuantities, Map<Product, Offer> offers, SupermarketCatalog catalog) {
+        for (ProductQuantity p: productQuantities) {
+            double quantity = p.quantity;
+            if (offers.containsKey(p.product)) {
+                Offer offer = offers.get(p.product);
+                Discount discount = offer.getDiscount(catalog, quantity);
+                if (discount != null)
+                    receipt.addDiscount(discount);
+            }
+        }
     }
 }

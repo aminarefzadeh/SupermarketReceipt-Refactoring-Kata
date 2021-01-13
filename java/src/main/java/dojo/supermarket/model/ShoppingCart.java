@@ -26,16 +26,4 @@ public class ShoppingCart {
         }
         items.add(new ProductQuantity(product, quantity));
     }
-
-    void handleOffers(Receipt receipt, Map<Product, Offer> offers, SupermarketCatalog catalog) {
-        for (ProductQuantity p: items) {
-            double quantity = p.quantity;
-            if (offers.containsKey(p.product)) {
-                Offer offer = offers.get(p.product);
-                Discount discount = offer.getDiscount(catalog, quantity);
-                if (discount != null)
-                    receipt.addDiscount(discount);
-            }
-        }
-    }
 }
