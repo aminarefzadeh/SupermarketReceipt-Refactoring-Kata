@@ -1,22 +1,23 @@
 package main.java.dojo.supermarket.model.offers;
 
-public class TwoForAmountOffer extends Offer {
+public class SomeForAmountOffer extends Offer {
+    private int number ;
     private double amount ;
 
-    public TwoForAmountOffer(Product product, double amount) {
+    public SomeForAmountOffer(Product product, int number, double amount) {
         super(product);
         this.amount = amount;
+        this.number = number;
     }
 
     Discount getDiscount(SupermarketCatalog catalog, double quantity){
         double unitPrice = catalog.getUnitPrice(this.product);
         int quantityAsInt = (int) quantity;
         Discount discount = null;
-        x = 2;
-        if (quantityAsInt >= 2) {
-            double total = this.argument * (quantityAsInt / x) + quantityAsInt % 2 * unitPrice;
+        if (quantityAsInt >= this.number) {
+            double total = this.amount * (quantityAsInt / this.number) + quantityAsInt % this.number * unitPrice;
             double discountN = unitPrice * quantity - total;
-            discount = new Discount(this.product, "2 for " + this.argument, -discountN);
+            discount = new Discount(this.product, this.number + " for " + this.amount, -discountN);
         }
         return discount;
     }
